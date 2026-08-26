@@ -57,6 +57,7 @@ jobs:
             --source ./exampleSite \
             --destination ./public \
             --themesDir ../ \
+            --theme blog-tuan \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
