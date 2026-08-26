@@ -169,8 +169,8 @@ export function createStore<S extends object>(initial: S) {
 ```bash
 hugo new site blog && cd blog
 git init
-git submodule add https://github.com/nguyentuan/blog-tuan themes/blog-tuan
-echo 'theme = "blog-tuan"' >> hugo.toml
+git submodule add https://github.com/chidokun/hugo-blog-tuan themes/hugo-blog-tuan
+echo 'theme = "hugo-blog-tuan"' >> hugo.toml
 hugo server --buildDrafts --disableFastRender
 ```
 

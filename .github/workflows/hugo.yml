@@ -53,6 +53,9 @@ jobs:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
         run: |
+          rm -rf ./public ./exampleSite/themes
+          mkdir -p ./exampleSite/themes
+          ln -s ../.. ./exampleSite/themes/hugo-blog-tuan
           hugo \
             --source ./exampleSite \
             --destination ./public \

@@ -13,8 +13,6 @@ exampleSite/.hugo_build.lock
 .idea/
 .vscode/
 
-# symlink chỉ dùng khi chạy exampleSite tại chỗ
-exampleSite/themes/
 
 # AI configs
 .claude

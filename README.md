@@ -35,22 +35,30 @@ Requires Hugo **0.141.0** or newer. The `extended` build is not needed.
 
 ```bash
 hugo new site blog && cd blog
-git init
-git submodule add https://github.com/nguyentuan/blog-tuan themes/blog-tuan
+hugo mod init github.com/you/blog
+hugo mod get github.com/chidokun/hugo-blog-tuan
 ```
 
 Then put this in `hugo.toml`:
 
 ```toml
-theme = "blog-tuan"
 title = "Your site"
 locale = "en-US"
+
+[module]
+  [[module.imports]]
+    path = "github.com/chidokun/hugo-blog-tuan"
 
 [params]
   description = "What this site is."
   tagline = "The line under the title on the home page."
   author = "Your name"
 ```
+
+Prefer a git submodule? `git submodule add
+https://github.com/chidokun/hugo-blog-tuan themes/hugo-blog-tuan`, then
+`theme = "hugo-blog-tuan"` instead of the `[module]` block. Modules need the Go
+toolchain on your machine; submodules do not.
 
 **One more block is required.** Hugo does not merge a theme's `[markup]`
 settings, so copy that section out of
@@ -251,9 +259,9 @@ Eight posts covering everything above, including a full Markdown reference and a
 Japanese page with furigana.
 
 ```bash
-git clone https://github.com/nguyentuan/blog-tuan
-cd blog-tuan/exampleSite
-hugo server --themesDir ../..
+git clone https://github.com/chidokun/hugo-blog-tuan
+cd hugo-blog-tuan/exampleSite
+hugo server
 ```
 
 ## Licence

@@ -12,7 +12,7 @@ Modules sit directly on top of Go modules, so they come with real versioning.
 
 ```bash
 hugo mod init github.com/you/blog
-hugo mod get github.com/nguyentuan/blog-tuan
+hugo mod get github.com/chidokun/hugo-blog-tuan
 ```
 
 Then declare it in `hugo.toml`:
@@ -20,7 +20,7 @@ Then declare it in `hugo.toml`:
 ```toml
 [module]
   [[module.imports]]
-    path = "github.com/nguyentuan/blog-tuan"
+    path = "github.com/chidokun/hugo-blog-tuan"
 ```
 
 Upgrading later is just `hugo mod get -u`. To pin a particular release, append
