@@ -58,7 +58,7 @@ jobs:
           ln -s ../.. ./exampleSite/themes/hugo-blog-tuan
           hugo \
             --source ./exampleSite \
-            --destination ./public \
+            --destination ../public \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
