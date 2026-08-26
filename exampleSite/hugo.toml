@@ -1,6 +1,6 @@
 baseURL = "https://example.com/"
 title = "blog@tuan"
-theme = "blog-tuan"
+theme = "hugo-blog-tuan"
 
 locale = "en-US"
 defaultContentLanguage = "en"
