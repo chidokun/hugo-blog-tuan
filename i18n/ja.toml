@@ -1,0 +1,54 @@
+[skipToContent]
+other = "本文へスキップ"
+[mainNav]
+other = "メインナビゲーション"
+[toDark]
+other = "ダークテーマに切り替える"
+[toLight]
+other = "ライトテーマに切り替える"
+[readingTime]
+other = "約 {{ .count }} 分"
+[allPosts]
+other = "全 {{ .count }} 件を見る"
+[noPosts]
+other = "まだ記事がありません。"
+[noTerms]
+other = "まだ何もありません。"
+[pagination]
+other = "ページ送り"
+[newer]
+other = "新しい"
+[older]
+other = "古い"
+[toc]
+other = "目次"
+[updatedOn]
+other = "更新"
+[postNav]
+other = "前後の記事"
+[prevPost]
+other = "前の記事"
+[nextPost]
+other = "次の記事"
+[termNote]
+other = "この{{ .taxonomy }}の記事 {{ .count }} 件"
+[allTerms]
+other = "すべてのカテゴリ"
+[archiveNote]
+other = "全 {{ .count }} 件、新しい順"
+[notFound]
+other = "お探しのページは見つかりませんでした。"
+[backHome]
+other = "ホームへ戻る"
+[copyCode]
+other = "コードをコピー"
+[anchorTo]
+other = "リンク:"
+[postCount]
+other = "{{ .count }} 件"
+[taxo_category]
+other = "カテゴリ"
+[taxo_tag]
+other = "タグ"
+[githubLink]
+other = "GitHub でソースを見る"

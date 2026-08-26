@@ -1,0 +1,27 @@
+{{- /* Highlighted by Chroma at build time — no JavaScript runs in the
+       browser. Supports {title="file-name.go"} on the fence. */ -}}
+{{- $lang := or .Type "text" -}}
+{{- $title := .Attributes.title -}}
+{{- /* Code blocks sit inside the text column by default. Add {wide=true} to
+       the fence to let one bleed out to the page frame, like a figure. */ -}}
+{{- $wide := .Attributes.wide -}}
+{{- if and $wide (in (slice "false" "0" "no") (printf "%v" $wide)) }}{{ $wide = false }}{{ end -}}
+{{- $result := transform.HighlightCodeBlock . -}}
+<div class="codeblock{{ if $wide }} codeblock--wide{{ end }}" data-lang="{{ $lang }}">
+  <div class="codeblock__bar">
+    {{- with $title }}<span class="codeblock__name">{{ . }}</span>{{ end }}
+    <span class="codeblock__lang">{{ $lang }}</span>
+    <button class="codeblock__copy" type="button" aria-label="{{ i18n "copyCode" }}" title="{{ i18n "copyCode" }}">
+      <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="12" height="12" rx="2"/>
+        <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>
+      </svg>
+      <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 12.5 9.5 18 20 6.5"/>
+      </svg>
+    </button>
+  </div>
+  {{ $result.Wrapped }}
+</div>

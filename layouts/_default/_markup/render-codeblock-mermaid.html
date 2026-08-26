@@ -1,0 +1,6 @@
+{{- .Page.Store.Set "hasMermaid" true -}}
+{{- /* Same rule as code blocks: inside the text column by default, {wide=true} to bleed. */ -}}
+{{- $wide := .Attributes.wide -}}
+{{- if and $wide (in (slice "false" "0" "no") (printf "%v" $wide)) }}{{ $wide = false }}{{ end -}}
+<pre class="mermaid{{ if $wide }} is-wide{{ end }}"
+  {{- with .Attributes.title }} aria-label="{{ . }}"{{ end }}>{{- .Inner | htmlEscape | safeHTML -}}</pre>

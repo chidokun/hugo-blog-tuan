@@ -1,0 +1,9 @@
+{{- /* Takes: a Pager (the result of .Paginate). */ -}}
+{{- $p := . -}}
+{{- if gt $p.TotalPages 1 }}
+<nav class="pager" aria-label="{{ i18n "pagination" }}">
+  <span>{{ with $p.Prev }}<a href="{{ .URL }}" rel="prev">← {{ i18n "newer" }}</a>{{ end }}</span>
+  <span class="pager__pos">{{ $p.PageNumber }} / {{ $p.TotalPages }}</span>
+  <span>{{ with $p.Next }}<a href="{{ .URL }}" rel="next">{{ i18n "older" }} →</a>{{ end }}</span>
+</nav>
+{{- end }}

@@ -1,0 +1,5 @@
+{{- $q := site.Params.blog | default dict -}}
+{{- $ver := or (index $q "katexVersion") "0.16" -}}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@{{ $ver }}/dist/katex.min.css"
+      crossorigin="anonymous">

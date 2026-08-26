@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="page-head">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-head__note">{{ . | markdownify }}</p>{{ end }}
+  </div>
+
+  {{- with .Content }}<div class="prose" style="margin-block-end:2.5rem">{{ . }}</div>{{ end }}
+
+  {{- range .Pages.ByTitle }}
+  <section class="archive-group archive-group--term">
+    <h2>
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      <span class="archive-group__count">{{ i18n "postCount" (dict "count" (len .Pages)) }}</span>
+    </h2>
+    {{- /* Groups here are categories, not years, so the date carries its year. */ -}}
+    {{ partial "archive-rows.html" (dict "pages" .Pages "format" (or (index (site.Params.blog | default dict) "dateFormat") "02.01.2006")) }}
+  </section>
+  {{- else }}
+  <p class="dim">{{ i18n "noTerms" }}</p>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="page-head">
+    <h1>{{ .Title }}</h1>
+    <p class="page-head__note">
+      {{- with .Description }}{{ . | markdownify }}{{ else -}}
+        {{ i18n "termNote" (dict "count" (len .Pages) "taxonomy" (i18n (printf "taxo_%s" .Data.Singular) | default .Data.Singular)) }}
+      {{- end -}}
+    </p>
+  </div>
+
+  {{- with .Content }}<div class="prose" style="margin-block-end:2.5rem">{{ . }}</div>{{ end }}
+
+  {{- range .Pages.GroupByDate "2006" }}
+  <section class="archive-group">
+    <h2>{{ .Key }}</h2>
+    {{ partial "archive-rows.html" (dict "pages" .Pages) }}
+  </section>
+  {{- end }}
+
+  <p class="list-more list-more--back">
+    {{- $parent := .Parent -}}
+    <a href="{{ with $parent }}{{ .RelPermalink }}{{ else }}/{{ end }}">{{ i18n "allTerms" }}</a>
+  </p>
+</div>
+{{ end }}

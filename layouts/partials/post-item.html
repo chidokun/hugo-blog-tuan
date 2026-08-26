@@ -1,0 +1,16 @@
+<article class="post-item">
+  <div class="post-item__date">{{ partial "date.html" . }}</div>
+  <div>
+    <h2 class="post-item__title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+    {{- with (or .Description (.Summary | plainify | htmlUnescape | chomp)) }}
+    <p class="post-item__summary">{{ . | truncate 220 }}</p>
+    {{- end }}
+    {{- with .GetTerms "categories" }}
+    <div class="post-item__meta">
+      <span class="t-label">
+        {{- range $i, $t := . }}{{ if $i }} · {{ end }}<a href="{{ $t.RelPermalink }}">{{ $t.LinkTitle }}</a>{{ end -}}
+      </span>
+    </div>
+    {{- end }}
+  </div>
+</article>

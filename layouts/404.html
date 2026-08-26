@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="wrap notfound">
+  <p class="notfound__code">404</p>
+  <p>{{ i18n "notFound" }}</p>
+  <p class="list-more" style="border:0;margin-block-start:1.5rem;padding:0">
+    <a href="{{ "/" | relURL }}">{{ i18n "backHome" }}</a>
+  </p>
+</div>
+{{ end }}

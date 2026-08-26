@@ -1,0 +1,18 @@
+{{- $app := resources.Get "js/app.js" -}}
+{{- if hugo.IsProduction }}{{ $app = $app | minify | fingerprint "sha256" }}{{ end }}
+<script src="{{ $app.RelPermalink }}"{{ with $app.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }} defer></script>
+
+{{- /* KaTeX's stylesheet loads only on pages that actually contain maths. The
+       markup itself is already built, so no JavaScript is involved. */ -}}
+{{- if .Page.Store.Get "hasMath" }}
+  {{ partialCached "katex-css.html" . }}
+{{- end }}
+
+{{- if .Page.Store.Get "hasMermaid" }}
+  {{- $q := site.Params.blog | default dict -}}
+  {{- $ver := or (index $q "mermaidVersion") "11" -}}
+  {{- $m := resources.Get "js/mermaid-init.js"
+        | resources.ExecuteAsTemplate (printf "js/mermaid-%s.js" $ver) (dict "version" $ver) -}}
+  {{- if hugo.IsProduction }}{{ $m = $m | minify | fingerprint "sha256" }}{{ end }}
+  <script type="module" src="{{ $m.RelPermalink }}"></script>
+{{- end }}

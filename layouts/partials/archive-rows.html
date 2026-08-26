@@ -1,0 +1,20 @@
+{{- /* Takes: dict {pages, format, showCat}.
+
+       Without an explicit format this uses params.blog.dateFormatShort — the
+       day and month only, for groups that are already a year so the year is
+       not repeated. Pass params.blog.dateFormat when the grouping is something
+       else, such as a category, and the year has to come along. */ -}}
+{{- $t := site.Params.blog | default dict -}}
+{{- $fmt := or .format (index $t "dateFormatShort") "02.01" -}}
+{{- $full := strings.Contains $fmt "2006" -}}
+<div class="archive-list{{ if $full }} archive-list--full-date{{ end }}">
+  {{- range .pages }}
+  <div class="archive-row">
+    <time class="archive-row__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ time.Format $fmt .Date }}</time>
+    <span class="archive-row__title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></span>
+    {{- if $.showCat }}{{ with .GetTerms "categories" }}
+    <span class="archive-row__cat">{{ (index . 0).LinkTitle }}</span>
+    {{- end }}{{ end }}
+  </div>
+  {{- end }}
+</div>

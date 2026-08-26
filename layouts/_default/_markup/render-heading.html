@@ -1,0 +1,5 @@
+<h{{ .Level }} id="{{ .Anchor }}"
+  {{- range $k, $v := .Attributes }}{{ if ne $k "id" }} {{ $k }}="{{ $v }}"{{ end }}{{ end }}>
+  {{- .Text -}}
+  {{- if and (ge .Level 2) (le .Level 4) }}<a class="heading-anchor" href="{{ printf "#%s" .Anchor | safeURL }}" aria-label="{{ i18n "anchorTo" }} {{ .PlainText }}">#</a>{{ end -}}
+</h{{ .Level }}>

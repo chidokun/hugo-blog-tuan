@@ -1,0 +1,237 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  blog@tuan — theme configuration
+#
+#  Three kinds of block live in this file, and they behave differently:
+#
+#    [params.blog]   MERGED into your site. The values below are the theme's
+#                    live defaults; your own hugo.toml overrides any of them.
+#    [module]        Applies to the theme itself (the Hugo version floor).
+#    [markup]        NOT merged. Hugo only merges [params] out of a theme, so
+#    [permalinks]    these are reference copies for you to paste into your own
+#                    hugo.toml. Leaving them here alone does nothing.
+#
+#  A trap worth knowing: custom keys placed anywhere other than [params] are
+#  discarded silently, with no warning at all. If a setting seems to have no
+#  effect, check its nesting first.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ── Hugo version floor ───────────────────────────────────────────────────────
+# This is the one Hugo enforces; it warns when the version is too old.
+# theme.toml's min_version is metadata for themes.gohugo.io only and is never
+# read by Hugo — keep the two numbers in step by hand.
+[module]
+  [module.hugoVersion]
+    min = "0.141.0"       # transform.ToMath and `try` both need 0.141+
+    extended = false      # no Sass anywhere in the theme
+
+
+# ── Theme options ────────────────────────────────────────────────────────────
+# Everything the theme reads. Uncommented keys are the defaults it ships with;
+# commented keys are off unless your site sets them.
+[params]
+  [params.blog]
+
+    # -- Home page --------------------------------------------------------
+    homeCount = 10
+    # How many posts the home page lists. The "see all" link below the list
+    # appears only when there are more posts than this.
+
+    # -- Header -----------------------------------------------------------
+    # github = "https://github.com/you"
+    # A GitHub button appears in the header next to the light/dark toggle.
+    # Unset (the default) means no button is rendered at all.
+
+    cursorBlink = "none"
+    # A terminal-style caret after the site name, on both the header brand and
+    # the home page masthead:
+    #   "none"        nothing
+    #   "vertical"    a blinking upright bar, like a text cursor
+    #   "horizontal"  a blinking underscore, like an old terminal
+    # Drawn as a box, not a character, so no font has to carry a caret glyph.
+    # Readers who ask for reduced motion still see it; it just stops flashing.
+
+    # -- Dates ------------------------------------------------------------
+    dateFormat = "02.01.2006"
+    # Any Go layout string. Used everywhere a full date is printed: the post
+    # header, the home list, the category pages.
+
+    dateFormatShort = "02.01"
+    # The day-and-month form used inside a year group on the archive, where
+    # repeating the year would be noise.
+    #
+    # Both go through Hugo's time.Format, so month and day names follow the
+    # site's `locale` — NOT defaultContentLanguage. With "2 January 2006":
+    #   locale = "en-US"  ->  25 August 2026
+    #   locale = "vi-VN"  ->  25 tháng 8 2026
+    #   locale = "ja-JP"  ->  25 8月 2026
+    # The datetime attribute on each <time> stays ISO regardless; it is for
+    # machines and must never be localised.
+
+    # -- External assets --------------------------------------------------
+    googleFonts = true
+    # Loads Space Mono from Google Fonts, the only web font the theme uses.
+    # Body and interface type come from the reader's own machine. Set false if
+    # you self-host it, then add the @font-face rules in assets/css/custom.css.
+
+    mermaidVersion = "11"
+    # Mermaid release pulled from jsDelivr, and only on pages that contain a
+    # diagram. "11" tracks the latest 11.x; pin it harder ("11.4.1") if you
+    # would rather not follow upstream. To drop the third-party request
+    # entirely, vendor mermaid.esm.min.mjs into assets/js/ and edit the import
+    # in assets/js/mermaid-init.js.
+
+    katexVersion = "0.16"
+    # KaTeX stylesheet version, loaded only on pages that contain mathematics.
+    # The expressions themselves are built at compile time, so this is the one
+    # file involved — no KaTeX JavaScript reaches the browser.
+
+    # -- Behaviour --------------------------------------------------------
+    externalNewTab = false
+    # true opens links leaving your site in a new tab. Either way they get
+    # rel="noopener noreferrer".
+
+    # dir = "rtl"
+    # Sets the dir attribute on <html>. Only needed for right-to-left
+    # languages; the theme's own layout is direction-agnostic (it uses logical
+    # properties throughout), but it has not been tested in an RTL setting.
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Site-level parameters the theme reads
+#
+#  These sit at [params], NOT under [params.blog], because they describe your
+#  site rather than the theme. Nothing here has a default — set them in your
+#  own hugo.toml.
+#
+#  [params]
+#    description = "One or two sentences."
+#      Fallback for <meta name="description"> and Open Graph when a page has no
+#      description of its own.
+#
+#    tagline = "The italic line under the site name on the home page."
+#      Falls back to `description` when unset.
+#
+#    author = "Your name"
+#      <meta name="author"> and the JSON-LD author. A post can override it with
+#      `author` in its front matter.
+#
+#    mainSections = ["posts"]
+#      Which sections count as blog posts. Drives the home list, the archive
+#      and the post counts. Defaults to ["posts"] when unset.
+#
+#    image = "og-image.png"
+#      Default Open Graph image. A post can override it with `image` in front
+#      matter, where a page resource is resolved before a site-relative path.
+#
+#    customHead = "<link rel=...>"
+#      Raw HTML appended to <head>, for analytics or a favicon. Not escaped.
+#
+#  Hugo's own keys the theme uses directly: title (the site name in the header
+#  and masthead), copyright (the footer line), locale (date localisation, see
+#  above), languageCode/defaultContentLanguage (interface strings from i18n/).
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Front matter the theme reads
+#
+#  ---
+#  title: "..."           required
+#  date: 2026-08-20       drives ordering, the archive grouping and permalinks
+#  lastmod: 2026-08-22    prints an "Updated" line when more than a day later
+#  description: "..."     list summary, meta description, Open Graph
+#  categories: ["Notes"]  taxonomy
+#  tags: ["hugo"]         taxonomy
+#  toc: true              collapsible table of contents; opens by default when
+#                         it has 8 entries or fewer, stays folded when longer
+#  lang: ja               switches type stack, leading and kinsoku for that
+#                         article — no multilingual site setup needed
+#  author: "..."          overrides params.author for this page
+#  image: "cover.png"     overrides params.image for this page
+#  draft: true            excluded unless you pass --buildDrafts
+#  slug / url             Hugo's own URL overrides; see [permalinks] below
+#  ---
+#
+#  There is deliberately no `math` flag: pages that contain mathematics are
+#  detected while rendering, and the KaTeX stylesheet is added only to those.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ── Required: copy this block into your own hugo.toml ────────────────────────
+# Hugo does not merge [markup] out of a theme. Without this, mathematics,
+# Markdown attributes and theme-aware syntax colours will not work.
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true         # allow raw HTML: <kbd>, <cite>, <ruby>, <details>
+    [markup.goldmark.extensions]
+      # GFM strikethrough also accepts a single tilde (~x~), which swallows the
+      # subscript syntax from extras. Turn it off; extras.delete handles ~~del~~.
+      # This key must sit here, directly under [markup.goldmark.extensions] and
+      # before any sub-table — TOML files a key under the nearest table above
+      # it, so moving it down silently puts it somewhere else.
+      strikethrough = false
+      [markup.goldmark.extensions.passthrough]
+        enable = true       # hand LaTeX through untouched, for KaTeX
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block  = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+      [markup.goldmark.extensions.typographer]
+        disable = false     # curly quotes, en/em dashes, ellipses
+      [markup.goldmark.extensions.cjk]
+        enable = true       # only matters if you write Japanese/Chinese/Korean
+        eastAsianLineBreaks = true
+        # Use "simple", not "css3draft". The css3draft style does not confine
+        # itself to East Asian text: it also eats the space at a soft line break
+        # in accented Latin. On the sample site it removed 5 spaces from the
+        # Vietnamese posts before this was caught.
+        eastAsianLineBreaksStyle = "simple"
+        escapedSpace = true
+      [markup.goldmark.extensions.extras]
+        [markup.goldmark.extensions.extras.delete]
+          enable = true     # ~~struck out~~
+        [markup.goldmark.extensions.extras.insert]
+          enable = true     # ++inserted++
+        [markup.goldmark.extensions.extras.mark]
+          enable = true     # ==highlighted==
+        [markup.goldmark.extensions.extras.subscript]
+          enable = true     # H~2~O
+        [markup.goldmark.extensions.extras.superscript]
+          enable = true     # E = mc^2^
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true        # {.lead} and {#custom-id} under a block
+        title = true
+
+  [markup.highlight]
+    noClasses = false       # REQUIRED. With true, Chroma bakes colours into a
+                            # style attribute and syntax stops following the
+                            # light/dark theme.
+    codeFences = true
+    guessSyntax = true      # colour fences that name no language
+    lineNos = false         # per-block instead, with {linenos=true}
+    lineNumbersInTable = true   # keeps line numbers out of a copied selection
+    tabWidth = 2
+    wrapperClass = "highlight"
+
+  [markup.tableOfContents]
+    startLevel = 2          # h1 is the post title, so the body starts at h2
+    endLevel = 3
+    ordered = false
+
+
+# ── Optional: copy this block for dated post URLs ────────────────────────────
+# Also not merged out of a theme. Without it posts sit at /posts/<name>/.
+#   :year :month :day   from the post date
+#   :contentbasename    the file name, or the folder name for a page bundle
+#   :slug               front matter `slug`, otherwise the title, urlised
+#
+# Prefer :contentbasename over :slug. :slug falls back to the title, and a
+# title that is not plain ASCII does not survive that — with removePathAccents
+# on, 日本語で came out as /日本語て/, with the dakuten stripped off.
+# To give one post its own URL, `url` in its front matter overrides the pattern.
+#
+# [permalinks]
+#   [permalinks.page]
+#     posts = "/:year/:month/:contentbasename/"

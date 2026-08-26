@@ -1,0 +1,18 @@
+{{- $src := .Destination -}}
+{{- $w := 0 }}{{ $h := 0 }}{{ $srcset := "" -}}
+{{- with .PageInner.Resources.GetMatch .Destination -}}
+  {{- $src = .RelPermalink }}{{ $w = .Width }}{{ $h = .Height -}}
+  {{- if and (gt .Width 700) (in (slice "image/jpeg" "image/png" "image/webp") .MediaType.Type) -}}
+    {{- $a := .Resize "700x webp q82" -}}
+    {{- $b := .Resize "1400x webp q78" -}}
+    {{- $src = $a.RelPermalink }}{{ $w = $a.Width }}{{ $h = $a.Height -}}
+    {{- $srcset = printf "%s 700w, %s 1400w" $a.RelPermalink $b.RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+{{- $caption := or .Title (and (ne .Text "") .Text) -}}
+<figure{{ if .Attributes.class }} class="{{ .Attributes.class }}"{{ end }}>
+  <img src="{{ $src | safeURL }}" alt="{{ .Text }}" loading="lazy" decoding="async"
+    {{- with $srcset }} srcset="{{ . }}" sizes="(max-width: 44rem) 100vw, 700px"{{ end }}
+    {{- if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }}>
+  {{- with $caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

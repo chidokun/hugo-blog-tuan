@@ -1,0 +1,4 @@
+{{- /* 圏点 (kenten): emphasis dots set above the characters — the Japanese
+       way to stress a phrase, in place of bold or italic. */ -}}
+<span class="kenten">{{ .Inner | .Page.RenderString }}</span>
+{{- /* Trim the trailing newline; see the note in ruby.html. */ -}}

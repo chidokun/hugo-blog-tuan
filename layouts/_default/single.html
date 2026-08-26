@@ -1,0 +1,40 @@
+{{ define "main" }}
+<article class="wrap"{{ with .Params.lang }} lang="{{ . }}"{{ end }}>
+  <header class="post-header">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p class="post-header__desc">{{ . | markdownify }}</p>{{ end }}
+    {{ partial "post-meta.html" . }}
+  </header>
+
+  {{- if and .Params.toc (ge (len .TableOfContents) 60) }}
+  {{- /* A short table of contents opens by default; a long one stays folded,
+         otherwise it pushes the whole opening below the first screen. */ -}}
+  {{- $items := len (findRE "<li" .TableOfContents) }}
+  <details class="toc"{{ if le $items 8 }} open{{ end }}>
+    <summary>{{ i18n "toc" }}</summary>
+    <nav>{{ .TableOfContents }}</nav>
+  </details>
+  {{- end }}
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{- $tags := .GetTerms "tags" }}
+  {{- $lastmod := and (not .Lastmod.IsZero) (not .Date.IsZero) (gt (.Lastmod.Sub .Date).Hours 24) }}
+  {{- if or $tags $lastmod }}
+  <footer class="post-footer">
+    {{- with $tags }}
+    <ul class="taxo-links">
+      {{- range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}
+    </ul>
+    {{- end }}
+    {{- if $lastmod }}
+    <p class="t-label">{{ i18n "updatedOn" }} {{ partial "date.html" (dict "date" .Lastmod) }}</p>
+    {{- end }}
+  </footer>
+  {{- end }}
+
+  {{ partial "post-nav.html" . }}
+</article>
+{{ end }}

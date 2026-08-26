@@ -1,0 +1,9 @@
+{{- $q := site.Params.blog | default dict -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $ext := and $u.Host (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
+{{- $dest := .Destination -}}
+{{- with .Page.GetPage .Destination }}{{ $dest = .RelPermalink }}{{ end -}}
+<a href="{{ $dest | safeURL }}"
+   {{- with .Title }} title="{{ . }}"{{ end }}
+   {{- if $ext }} rel="noopener noreferrer"{{ if index $q "externalNewTab" }} target="_blank"{{ end }}{{ end -}}
+>{{ .Text }}</a>

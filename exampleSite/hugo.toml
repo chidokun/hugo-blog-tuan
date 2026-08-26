@@ -1,0 +1,123 @@
+baseURL = "https://example.com/"
+title = "blog@tuan"
+theme = "blog-tuan"
+
+locale = "en-US"
+defaultContentLanguage = "en"
+timeZone = "UTC"
+
+enableRobotsTXT = true
+removePathAccents = true   # /categories/ky-thuat/ instead of /categories/kỹ-thuật/
+titleCaseStyle = "none"    # keep terms exactly as written, no Title Casing
+enableEmoji = true
+hasCJKLanguage = true      # count characters, not words, for Japanese/Chinese/Korean
+enableGitInfo = false
+summaryLength = 32
+copyright = "© 2026 blog@tuan. Content released under CC BY-SA 4.0."
+
+[pagination]
+  pagerSize = 10
+
+# Post URLs. Hugo's own [permalinks] block — change the pattern or drop the
+# block entirely to fall back to /posts/<name>/.
+#   :year :month :day  from the post date
+#   :slug              front matter `slug`, otherwise the title, urlised
+#   :contentbasename   the file name (or bundle folder), ignoring `slug`
+#   :section :title :filename  … see the Hugo docs for the full list
+[permalinks]
+  [permalinks.page]
+    posts = "/:year/:month/:contentbasename/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[outputs]
+  home = ["html", "rss"]
+  section = ["html", "rss"]
+
+[params]
+  description = "A minimal Hugo theme for long-form writing."
+  tagline = "Words first, interface second. A quiet place to write at length."
+  author = "Nguyen Tuan"
+  mainSections = ["posts"]
+
+  [params.blog]
+    homeCount = 10           # posts listed on the home page
+    github = "https://github.com/nguyentuan"   # shows a GitHub button in the header
+    cursorBlink = "vertical" # caret after the site name: none | vertical | horizontal
+    dateFormat = "02.01.2006"      # any Go layout; localised by `locale` above
+    dateFormatShort = "02.01"      # inside a year group on the archive
+    mermaidVersion = "11"    # Mermaid version pulled from the CDN
+    katexVersion = "0.16"    # KaTeX stylesheet version
+    googleFonts = true       # false if you self-host Space Mono
+    externalNewTab = false   # open external links in a new tab
+
+[menus]
+  [[menus.main]]
+    name = "Posts"
+    pageRef = "/posts"
+    weight = 10
+  [[menus.main]]
+    name = "Archive"
+    pageRef = "/archive"
+    weight = 20
+  [[menus.main]]
+    name = "Categories"
+    pageRef = "/categories"
+    weight = 30
+
+# ── Required ────────────────────────────────────────────────────────────────
+# Hugo does not merge a theme's [markup] block, so this has to live in the
+# site's own configuration. Copy it verbatim when you set up a new site.
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true                      # allow raw HTML: <kbd>, <cite>, <ruby>…
+    [markup.goldmark.extensions]
+      # GFM strikethrough also accepts a single tilde (~x~), which swallows the
+      # subscript syntax from extras. Turn it off; extras.delete handles ~~del~~.
+      strikethrough = false
+      [markup.goldmark.extensions.passthrough]
+        enable = true                    # hand LaTeX through untouched, for KaTeX
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block  = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+      [markup.goldmark.extensions.cjk]
+        enable = true                    # drop the stray space at a soft line break
+        eastAsianLineBreaks = true
+        eastAsianLineBreaksStyle = "simple"
+        escapedSpace = true
+      [markup.goldmark.extensions.extras]
+        [markup.goldmark.extensions.extras.delete]
+          enable = true
+        [markup.goldmark.extensions.extras.insert]
+          enable = true
+        [markup.goldmark.extensions.extras.mark]
+          enable = true
+        [markup.goldmark.extensions.extras.subscript]
+          enable = true
+        [markup.goldmark.extensions.extras.superscript]
+          enable = true
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true                     # allow {.lead} under a paragraph
+        title = true
+
+  [markup.highlight]
+    noClasses = false                    # required: theme-aware syntax colours
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    lineNumbersInTable = true
+    tabWidth = 2
+    wrapperClass = "highlight"
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+[tuan]
+  probe = "hello"

@@ -1,0 +1,466 @@
+/* ── khung trang ────────────────────────────────────────────────────── */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--w-page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+
+.site-main { flex: 1 0 auto; padding-block-end: 6rem; }
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: var(--gutter);
+  z-index: 10;
+  background: var(--canvas);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  padding: .5rem .9rem;
+  font-size: var(--step--1);
+  text-decoration: none;
+}
+.skip-link:focus-visible { inset-block-start: .75rem; }
+
+/* ── site header ────────────────────────────────────────────────────── */
+.site-header {
+  padding-block: 2.25rem 1.75rem;
+}
+.site-header__inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.site-brand {
+  font-family: var(--font-mono);
+  font-size: calc(var(--step-1) * .88);   /* Space Mono runs wide; pull it back */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-brand:hover { color: var(--accent-ink); }
+
+/* The masthead already prints the site name on the home page, so the one in the
+   header would be a duplicate — but hide it with visibility, not display. Taking
+   it out of the flow shortens the header by ~4px and shifts the menu, which
+   shows up as a jolt the moment you leave the home page. */
+.home .site-brand { visibility: hidden; }
+
+/* align-items: center, not baseline. With baseline the links are pushed to the
+   top of the flex line while the 2rem round button centres itself in it, which
+   dropped the icon almost 4px below the text. Centring everything puts the
+   label and the icon on one axis. */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;   /* wrapped rows stay flush right */
+  gap: .5rem clamp(.85rem, 3vw, 1.6rem);
+  margin-inline-start: auto;
+}
+.site-nav a {
+  font-size: var(--step--1);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-2);
+  /* 3px on top balances the 2px padding + 1px underline below, so the link box
+     is symmetric around its text — only then does centring the box centre the
+     text as well. */
+  padding-block: 3px 2px;
+  border-block-end: 1px solid transparent;
+  white-space: nowrap;   /* wrap the whole item rather than split a word */
+}
+.site-nav a:hover { color: var(--ink); border-block-end-color: var(--rule-strong); }
+.site-nav a[aria-current="page"] { color: var(--ink); border-block-end-color: var(--accent); }
+
+/* round icon buttons in the header: theme toggle, GitHub link */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  color: var(--ink-3);
+  text-decoration: none;
+  border: 0;
+  transition: color .12s ease, background-color .12s ease;
+}
+.icon-btn:hover { color: var(--ink); background: var(--surface); }
+.icon-btn svg { width: 1.05rem; height: 1.05rem; }
+.site-nav__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: .1rem;
+  margin-inline-start: -.25rem;
+}
+.theme-toggle .icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+
+/* ── blinking cursor after the site name ───────────────────────────────
+   Switched on by params.tuan.cursorBlink = "vertical" | "horizontal", which
+   baseof.html turns into data-cursor on <html>. Drawn as a box rather than a
+   character so it does not depend on the font carrying a caret glyph. */
+:root[data-cursor] .site-brand::after,
+:root[data-cursor] .masthead h1::after {
+  content: "";
+  display: inline-block;
+  background: var(--accent);
+  animation: caret-blink 1.06s step-end infinite;
+}
+
+:root[data-cursor="vertical"] .site-brand::after,
+:root[data-cursor="vertical"] .masthead h1::after {
+  width: .085em;
+  height: .92em;
+  margin-inline-start: .14em;
+  translate: 0 .1em;
+}
+
+:root[data-cursor="horizontal"] .site-brand::after,
+:root[data-cursor="horizontal"] .masthead h1::after {
+  width: .55em;
+  height: .085em;
+  margin-inline-start: .12em;
+  translate: 0 .06em;      /* sits on the baseline, like a terminal underscore */
+}
+
+@keyframes caret-blink {
+  0%, 50%      { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* A caret that never stops moving is exactly what this setting is for, so keep
+   it visible for readers who ask for less motion — just stop it flashing. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-cursor] .site-brand::after,
+  :root[data-cursor] .masthead h1::after { animation: none; }
+}
+
+/* ── site footer ────────────────────────────────────────────────────── */
+.site-footer {
+  border-block-start: 1px solid var(--rule);
+  padding-block: 1.6rem 2.5rem;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.4rem;
+  justify-content: space-between;
+}
+.site-footer a { text-decoration-color: var(--rule); }
+
+/* ── home ───────────────────────────────────────────────────────────── */
+.masthead {
+  padding-block: 1.5rem 3.25rem;
+  border-block-end: 1px solid var(--rule);
+  margin-block-end: 2.75rem;
+}
+.masthead h1 {
+  font-family: var(--font-mono);
+  font-size: calc(var(--step-4) * .8);    /* Space Mono runs wide; pull it back */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.masthead p {
+  margin-block-start: .7rem;
+  font-size: var(--step-1);
+  font-style: italic;
+  color: var(--ink-2);
+  max-width: 30rem;
+  line-height: 1.45;
+}
+
+/* ── post list ──────────────────────────────────────────────────────── */
+.post-list { display: flex; flex-direction: column; }
+
+.post-item {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0 1.75rem;
+  padding-block: 1.9rem;
+  border-block-start: 1px solid var(--rule);
+}
+.post-item:first-child { border-block-start: 0; padding-block-start: 0; }
+
+.post-item__date { padding-block-start: .5em; }
+.post-item__title {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  line-height: 1.28;
+}
+.post-item__title a { text-decoration: none; }
+.post-item__title a:hover { color: var(--accent-ink); }
+.post-item__summary {
+  margin-block-start: .5rem;
+  color: var(--ink-2);
+  font-size: calc(var(--step-0) * .96);
+  line-height: 1.6;
+}
+.post-item__meta {
+  margin-block-start: .65rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .9rem;
+}
+.post-item__meta a { text-decoration: none; }
+.post-item__meta a:hover { color: var(--accent-ink); }
+
+@media (max-width: 34rem) {
+  .post-item { grid-template-columns: 1fr; gap: .4rem; }
+  .post-item__date { padding-block-start: 0; }
+}
+
+.list-more {
+  margin-block-start: 2.75rem;
+  padding-block-start: 1.6rem;
+  border-block-start: 1px solid var(--rule);
+}
+.list-more a {
+  font-size: var(--step--1);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+.list-more a:hover { color: var(--accent-ink); }
+.list-more a::after { content: " →"; }
+.list-more--back a::after { content: none; }
+.list-more--back a::before { content: "← "; }
+
+/* ── section heading ────────────────────────────────────────────────── */
+.page-head {
+  padding-block: 1.25rem 2.25rem;
+  border-block-end: 1px solid var(--rule);
+  margin-block-end: 2.5rem;
+}
+.page-head h1 {
+  font-size: var(--step-3);
+  letter-spacing: -0.024em;
+}
+.page-head__note {
+  margin-block-start: .55rem;
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+/* ── archive & categories ─────────────────────────────────────────────
+   One shared block: the group label on the left, its posts on the right. The
+   archive groups by year; the categories page groups by category name. */
+.archive-group {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0 1.75rem;
+  padding-block-start: 2.5rem;
+}
+.archive-group:first-of-type { padding-block-start: 0; }
+.archive-group > h2 {
+  font-size: var(--step-2);
+  font-weight: 400;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  position: sticky;
+  inset-block-start: 1.5rem;
+}
+
+/* grouped by category: names run longer than a year, so wider and smaller */
+.archive-group--term { grid-template-columns: 9.5rem 1fr; }
+.archive-group--term > h2 {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+.archive-group--term > h2 a { text-decoration: none; }
+.archive-group--term > h2 a:hover { color: var(--accent-ink); }
+.archive-group__count {
+  display: block;
+  margin-block-start: .3em;
+  font-size: var(--step--1);
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.archive-list { display: flex; flex-direction: column; }
+.archive-row {
+  display: flex;
+  align-items: baseline;
+  gap: .9rem;
+  padding-block: .62rem;
+  border-block-end: 1px solid var(--rule);
+}
+.archive-row:first-child { padding-block-start: 0; }
+.archive-row__date {
+  flex: 0 0 auto;
+  width: 3.1rem;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+/* when the grouping is not a year the date carries one, so widen the column */
+.archive-list--full-date .archive-row__date { width: 5.1rem; }
+.archive-row__title { flex: 1 1 auto; line-height: 1.4; }
+.archive-row__title a { text-decoration: none; }
+.archive-row__title a:hover { color: var(--accent-ink); text-decoration: underline; text-decoration-color: var(--accent); }
+.archive-row__cat {
+  flex: 0 0 auto;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+
+@media (max-width: 34rem) {
+  .archive-group,
+  .archive-group--term { grid-template-columns: 1fr; gap: .9rem; }
+  .archive-group > h2 { position: static; }
+  .archive-group--term > h2 { display: flex; align-items: baseline; gap: .6rem; }
+  .archive-group__count { margin-block-start: 0; }
+  .archive-row__cat { display: none; }
+}
+
+/* ── taxonomy pills ─────────────────────────────────────────────────── */
+.taxo-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem .5rem;
+  list-style: none;
+  padding: 0;
+}
+.taxo-links li { margin: 0; }
+.taxo-links li::before { display: none; }
+.taxo-links a {
+  display: inline-block;
+  font-size: var(--step--1);
+  text-decoration: none;
+  color: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: .12em .7em;
+  transition: border-color .12s ease, color .12s ease;
+}
+.taxo-links a:hover { color: var(--accent-ink); border-color: var(--accent); }
+
+/* ── single post ────────────────────────────────────────────────────── */
+.post-header {
+  padding-block: 1rem 2.25rem;
+  margin-block-end: 2.25rem;
+  border-block-end: 1px solid var(--rule);
+}
+.post-header h1 {
+  font-size: var(--step-3);
+  letter-spacing: -0.026em;
+}
+.post-header__desc {
+  margin-block-start: .8rem;
+  font-family: var(--font-prose);   /* same family as the article body */
+  font-size: var(--step-1);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.post-header__meta {
+  margin-block-start: 1.15rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .3rem .8rem;
+}
+.post-header__meta .sep { color: var(--rule-strong); }
+.post-header__meta a { text-decoration: none; color: var(--ink-3); }
+.post-header__meta a:hover { color: var(--accent-ink); }
+
+.post-footer {
+  margin-block-start: 3.5rem;
+  padding-block-start: 1.6rem;
+  border-block-start: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-block-start: 3rem;
+  padding-block-start: 1.6rem;
+  border-block-start: 1px solid var(--rule);
+}
+.post-nav a { text-decoration: none; display: block; line-height: 1.35; }
+.post-nav a:hover .post-nav__title { color: var(--accent-ink); }
+.post-nav__dir { display: block; margin-block-end: .35rem; }
+.post-nav__title { font-weight: 600; }
+.post-nav > :last-child:nth-child(2), .post-nav > .is-next { text-align: end; }
+@media (max-width: 34rem) {
+  .post-nav { grid-template-columns: 1fr; }
+  .post-nav > .is-next { text-align: start; }
+}
+
+/* table of contents */
+.toc {
+  margin-block-end: 2.5rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--canvas-alt);
+  padding: .85rem 1.15rem;
+  font-size: var(--step--1);
+}
+.toc > summary {
+  cursor: pointer;
+  list-style: none;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.toc > summary::-webkit-details-marker { display: none; }
+.toc > summary::after { content: " +"; color: var(--ink-3); }
+.toc[open] > summary::after { content: " −"; }
+.toc nav { margin-block-start: .8rem; }
+.toc ul { list-style: none; padding-inline-start: 0; margin: 0; }
+.toc ul ul { padding-inline-start: 1.1rem; }
+.toc li { margin-block: .3em; }
+.toc li::before { display: none; }
+.toc a { text-decoration: none; color: var(--ink-2); }
+.toc a:hover { color: var(--accent-ink); }
+
+/* pagination */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-start: 3rem;
+  padding-block-start: 1.6rem;
+  border-block-start: 1px solid var(--rule);
+  font-size: var(--step--1);
+}
+.pager a { text-decoration: none; color: var(--ink-2); }
+.pager a:hover { color: var(--accent-ink); }
+.pager__pos { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+/* 404 */
+.notfound { text-align: center; padding-block: 5rem 4rem; }
+.notfound__code {
+  font-size: var(--step-4);
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+.notfound p { margin-block-start: .8rem; color: var(--ink-2); }

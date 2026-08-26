@@ -1,0 +1,19 @@
+{{- $type := cond .IsPage "BlogPosting" "WebSite" -}}
+{{- $d := dict
+      "@context" "https://schema.org"
+      "@type" $type
+      "headline" (.Title | default site.Title)
+      "url" .Permalink
+      "inLanguage" site.Language.Lang
+-}}
+{{- with (or .Description .Summary site.Params.description) }}
+  {{- $d = merge $d (dict "description" (. | plainify | htmlUnescape | chomp | truncate 200)) }}
+{{- end }}
+{{- if .IsPage }}
+  {{- with .Date }}{{ $d = merge $d (dict "datePublished" (.Format "2006-01-02T15:04:05Z07:00")) }}{{ end }}
+  {{- with .Lastmod }}{{ $d = merge $d (dict "dateModified" (.Format "2006-01-02T15:04:05Z07:00")) }}{{ end }}
+  {{- with (or .Params.author site.Params.author) }}
+    {{- $d = merge $d (dict "author" (dict "@type" "Person" "name" .)) }}
+  {{- end }}
+{{- end }}
+<script type="application/ld+json">{{ $d | jsonify (dict "noHTMLEscape" true) | safeJS }}</script>

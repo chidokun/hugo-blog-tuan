@@ -1,0 +1,20 @@
+# Hugo
+public/
+resources/_gen/
+.hugo_build.lock
+exampleSite/public/
+exampleSite/resources/
+exampleSite/.hugo_build.lock
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+
+# symlink chỉ dùng khi chạy exampleSite tại chỗ
+exampleSite/themes/
+
+# AI configs
+.claude

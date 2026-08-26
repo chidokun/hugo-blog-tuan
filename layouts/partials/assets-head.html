@@ -1,0 +1,24 @@
+{{- /* CSS: concatenate, minify, fingerprint — all of it at build time. */ -}}
+{{- $css := slice
+      (resources.Get "css/00-reset.css")
+      (resources.Get "css/01-tokens.css")
+      (resources.Get "css/02-typography.css")
+      (resources.Get "css/03-layout.css")
+      (resources.Get "css/04-code.css")
+      (resources.Get "css/05-math-mermaid.css")
+      (resources.Get "css/06-bleed.css")
+      (resources.Get "css/07-cjk.css")
+    | resources.Concat "css/blog-tuan.css" -}}
+{{- if hugo.IsProduction }}
+  {{- $css = $css | minify | fingerprint "sha256" }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{- else }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{- end }}
+{{- with resources.Get "css/custom.css" }}
+  {{- $c := . }}{{ if hugo.IsProduction }}{{ $c = $c | minify | fingerprint "sha256" }}{{ end }}
+  <link rel="stylesheet" href="{{ $c.RelPermalink }}">
+{{- end }}
+
+{{- $init := resources.Get "js/theme-init.js" | minify -}}
+<script>{{ $init.Content | safeJS }}</script>

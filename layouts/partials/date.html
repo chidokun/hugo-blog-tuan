@@ -1,0 +1,18 @@
+{{- /* Takes: a Page, or dict {date, format}. Prints a <time> element.
+
+       Rendered through time.Format rather than .Format so that month and day
+       names follow the site language — "2 January 2006" comes out as
+       "2 tháng 1 2006" on a Vietnamese site. The datetime attribute stays on
+       .Format: it is machine-readable and must never be localised. */ -}}
+{{- $t := site.Params.blog | default dict -}}
+{{- $fmt := or (index $t "dateFormat") "02.01.2006" -}}
+{{- $d := "" -}}
+{{- if reflect.IsMap . -}}
+  {{- $d = .date -}}
+  {{- with .format }}{{ $fmt = . }}{{ end -}}
+{{- else -}}
+  {{- $d = .Date -}}
+{{- end -}}
+{{- if and $d (not $d.IsZero) -}}
+<time class="t-label" datetime="{{ $d.Format "2006-01-02" }}">{{ time.Format $fmt $d }}</time>
+{{- end -}}

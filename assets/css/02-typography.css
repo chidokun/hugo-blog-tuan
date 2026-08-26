@@ -1,0 +1,316 @@
+/* ── type foundations ───────────────────────────────────────────────── */
+html { font-size: 100%; }
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  font-optical-sizing: auto;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+h4 { font-size: var(--step-0); font-weight: 700; letter-spacing: -0.008em; }
+h5, h6 { font-size: var(--step--1); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+
+p { text-wrap: pretty; }
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: .18em;
+  transition: color .12s ease, text-decoration-color .12s ease;
+}
+a:hover { color: var(--accent-ink); text-decoration-color: var(--accent); }
+
+strong, b { font-weight: 600; }
+em, i { font-style: italic; }
+small { font-size: var(--step--1); }
+sup, sub { font-size: .72em; line-height: 0; }
+
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
+  /* 14px. In rem rather than px, so it still scales with the default font
+     size the reader has set in their browser. */
+  font-size: .875rem;
+  font-variant-ligatures: none;
+}
+
+/* small label used for dates, categories and navigation */
+.t-label {
+  font-size: var(--step--1);
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.dim { color: var(--ink-3); }
+
+/* ── content flow ─────────────────────────────────────────────────────
+   Article content reads in serif, clearly apart from the interface chrome.
+   Code keeps --font-mono through the code/pre rule further up. */
+.prose { font-family: var(--font-prose); }
+
+/* ── links inside the article ─────────────────────────────────────────
+   Underlined with a border rather than text-decoration: the rule sits lower
+   and never cuts through the below-baseline marks Vietnamese uses (ạ, ợ, ệ).
+   Dashed at rest, solid on hover. */
+.prose a {
+  text-decoration: none;
+  border-block-end: 1px dashed var(--accent);
+  transition: color .12s ease, border-color .12s ease;
+}
+.prose a:hover {
+  color: var(--accent-ink);
+  border-block-end-style: solid;
+  border-block-end-color: var(--accent-ink);
+}
+
+/* Anything that is not a content link keeps its own styling: footnote
+   markers, back-references, heading anchors, and links wrapping an image. */
+.prose .footnote-ref,
+.prose .footnote-backref,
+.prose .heading-anchor,
+.prose a:has(img) { border-block-end: 0; }
+.prose .footnote-ref:hover,
+.prose .footnote-backref:hover,
+.prose .heading-anchor:hover { border-block-end: 0; }
+.prose h1, .prose h2, .prose h3,
+.prose h4, .prose h5, .prose h6 { font-family: var(--font-prose); }
+
+.prose > * + * { margin-block-start: var(--flow); }
+.prose > h2 { margin-block-start: 2.4em; margin-block-end: .1em; }
+.prose > h3 { margin-block-start: 1.9em; margin-block-end: .1em; }
+.prose > h4 { margin-block-start: 1.7em; margin-block-end: .1em; }
+.prose > h5, .prose > h6 { margin-block-start: 1.9em; margin-block-end: .3em; }
+.prose > :first-child { margin-block-start: 0; }
+
+.prose ul, .prose ol { padding-inline-start: 1.35em; }
+.prose li + li { margin-block-start: .35em; }
+.prose li > ul, .prose li > ol { margin-block-start: .35em; }
+.prose ul { list-style: none; }
+.prose ul > li { position: relative; }
+.prose ul > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -1em;
+  inset-block-start: .72em;
+  width: .32em; height: .32em;
+  border-radius: 50%;
+  background: var(--rule-strong);
+}
+.prose ol { list-style: decimal; }
+.prose ol > li::marker { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+/* ── task lists ───────────────────────────────────────────────────────
+   Goldmark emits <li><input type="checkbox"> with no class at all. The tick
+   box already plays the part of the bullet, so hide the drawn dot. */
+.prose li:has(> input[type="checkbox"])::before { display: none; }
+.prose li > input[type="checkbox"] {
+  accent-color: var(--accent);
+  margin-inline: -1.35em .5em;
+  translate: 0 .1em;
+}
+
+/* ── definition lists ───────────────────────────────────────────────── */
+.prose dl { margin-block: 0; }
+.prose dt {
+  font-weight: 600;
+  margin-block-start: 1.2em;
+}
+.prose dt:first-child { margin-block-start: 0; }
+.prose dd {
+  margin-block-start: .35em;
+  margin-inline-start: 0;
+  padding-inline-start: 1.35em;
+  border-inline-start: 1px solid var(--rule);
+  color: var(--ink-2);
+}
+
+/* ── disclosure blocks ──────────────────────────────────────────────── */
+.prose details {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--canvas-alt);
+  padding: .85rem 1.15rem;
+}
+.prose details > summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+.prose details > summary::-webkit-details-marker { display: none; }
+.prose details > summary::after { content: " +"; color: var(--ink-3); font-weight: 400; }
+.prose details[open] > summary::after { content: " \2212"; }
+.prose details > * + * { margin-block-start: var(--flow); }
+.prose details > summary + * { margin-block-start: .85em; }
+
+.prose blockquote {
+  border-inline-start: 1px solid var(--rule-strong);
+  padding-inline-start: 1.3em;
+  font-style: italic;
+  color: var(--ink-2);
+}
+.prose blockquote p + p { margin-block-start: .8em; }
+.prose blockquote cite {
+  display: block;
+  margin-block-start: .7em;
+  font-style: normal;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+}
+.prose blockquote cite::before { content: "— "; }
+
+/* lead paragraph */
+.prose .lead, .prose > p.lead {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+/* section break: three centred dots, not a horizontal rule */
+.prose hr {
+  border: 0;
+  margin-block: 2.6em;
+  text-align: center;
+}
+.prose hr::before {
+  content: "· · ·";
+  letter-spacing: .5em;
+  color: var(--ink-3);
+  font-size: var(--step-1);
+}
+
+.prose code:not(pre code) {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: .1em .34em;
+  /* A long inline code span can outrun a phone screen, so it has to be able
+     to wrap. box-decoration-break keeps each fragment's rounded border
+     closed instead of leaving one gaping open mid-break. */
+  overflow-wrap: break-word;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.prose kbd {
+  background: var(--canvas-alt);
+  border: 1px solid var(--rule-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius);
+  padding: .05em .4em;
+  font-size: .8em;
+}
+
+.prose mark {
+  background: var(--syn-hl-bg);
+  color: inherit;
+  padding: .05em .2em;
+  border-radius: 2px;
+}
+
+.prose abbr[title] { text-decoration: underline dotted; cursor: help; }
+
+/* ── tables ─────────────────────────────────────────────────────────── */
+.prose .table-wrap {
+  overflow-x: auto;
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+}
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: inherit;      /* exactly the body text size */
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+.prose thead th {
+  text-align: start;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: inherit;
+  color: var(--ink-2);
+  padding-block: .6em;
+  border-block-end: 1px solid var(--ink-3);
+}
+.prose tbody td, .prose tbody th {
+  padding-block: .55em;
+  padding-inline-end: 1.2em;
+  border-block-end: 1px solid var(--rule);
+  vertical-align: top;
+  text-align: start;
+}
+.prose tbody tr:last-child td { border-block-end: 0; }
+
+/* ── figures ────────────────────────────────────────────────────────── */
+.prose figure { margin-block: 2em; }
+.prose figure img { width: 100%; border-radius: var(--radius); }
+.prose figcaption {
+  margin-block-start: .7em;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+/* ── footnotes ──────────────────────────────────────────────────────── */
+.prose .footnotes {
+  margin-block-start: 3em;
+  padding-block-start: 1.6em;
+  border-block-start: 1px solid var(--rule);
+  font-size: .93em;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.prose .footnotes hr { display: none; }
+.prose .footnotes ol { padding-inline-start: 1.2em; }
+.prose sup a, .footnote-backref {
+  text-decoration: none;
+  color: var(--accent);
+}
+.prose sup a:hover { text-decoration: underline; }
+
+/* Footnote markers in the body: bracketed so they read as references, and
+   sized back up to offset the .72em that <sup> takes away. */
+.prose .footnote-ref {
+  font-size: 1.15em;
+  font-variant-numeric: tabular-nums;
+  padding-inline-start: .15em;
+}
+.prose .footnote-ref::before { content: "["; }
+.prose .footnote-ref::after  { content: "]"; }
+
+/* heading anchor */
+.heading-anchor {
+  text-decoration: none;
+  color: var(--ink-3);
+  opacity: 0;
+  margin-inline-start: .35em;
+  font-weight: 400;
+  transition: opacity .12s ease;
+}
+h2:hover > .heading-anchor,
+h3:hover > .heading-anchor,
+h4:hover > .heading-anchor,
+.heading-anchor:focus-visible { opacity: 1; }

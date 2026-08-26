@@ -1,0 +1,16 @@
+# Metadata for the Hugo themes showcase (themes.gohugo.io). Hugo the binary does
+# not read this file at all — a wrong min_version here goes unnoticed. The floor
+# Hugo enforces lives in hugo.toml under [module.hugoVersion]; keep both in step.
+name = "blog@tuan"
+license = "MIT"
+licenselink = "https://github.com/chidokun/hugo-blog-tuan/blob/main/LICENSE"
+description = "A minimal Hugo theme for long-form writing: serif for reading, system sans for the interface, a cool palette. Light and dark modes, LaTeX and syntax highlighting rendered at build time, current Mermaid."
+homepage = "https://github.com/chidokun/hugo-blog-tuan"
+demosite = "https://github.com/chidokun/hugo-blog-tuan"
+tags = ["minimal", "blog", "serif", "dark mode", "latex", "katex", "mermaid", "syntax highlighting"]
+features = ["blog", "archive", "categories", "tags", "dark mode", "math", "diagrams", "rss", "multilingual"]
+min_version = "0.141.0"
+
+[author]
+  name = "Nguyen Tuan"
+  homepage = "https://github.com/chidokun"

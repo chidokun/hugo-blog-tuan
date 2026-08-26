@@ -1,0 +1,57 @@
+[skipToContent]
+other = "Skip to content"
+[mainNav]
+other = "Main navigation"
+[toDark]
+other = "Switch to dark theme"
+[toLight]
+other = "Switch to light theme"
+[readingTime]
+one = "{{ .count }} min read"
+other = "{{ .count }} min read"
+[allPosts]
+other = "See all {{ .count }} posts"
+[noPosts]
+other = "No posts yet."
+[noTerms]
+other = "Nothing here yet."
+[pagination]
+other = "Pagination"
+[newer]
+other = "Newer"
+[older]
+other = "Older"
+[toc]
+other = "Contents"
+[updatedOn]
+other = "Updated"
+[postNav]
+other = "Previous and next post"
+[prevPost]
+other = "Previous"
+[nextPost]
+other = "Next"
+[termNote]
+one = "{{ .count }} post in this {{ .taxonomy }}"
+other = "{{ .count }} posts in this {{ .taxonomy }}"
+[allTerms]
+other = "All categories"
+[archiveNote]
+other = "{{ .count }} posts, newest first"
+[notFound]
+other = "That page could not be found."
+[backHome]
+other = "Back home"
+[copyCode]
+other = "Copy code"
+[anchorTo]
+other = "Link to"
+[taxo_category]
+other = "category"
+[taxo_tag]
+other = "tag"
+[postCount]
+one = "{{ .count }} post"
+other = "{{ .count }} posts"
+[githubLink]
+other = "View the source on GitHub"

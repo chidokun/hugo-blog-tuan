@@ -1,0 +1,150 @@
+/* ── code blocks ────────────────────────────────────────────────────── */
+.codeblock {
+  position: relative;
+  margin-block: 1.9em;
+  background: var(--canvas-alt);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.codeblock__bar {
+  font-family: var(--font-body);   /* this bar is chrome, not content */
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .4rem .5rem .4rem .9rem;
+  border-block-end: 1px solid var(--rule);
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  min-height: 2.1rem;
+}
+.codeblock__name {
+  font-family: var(--font-mono);
+  font-size: .82em;
+  letter-spacing: .01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.codeblock__lang {
+  margin-inline-start: auto;
+  font-size: .78em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.codeblock__copy {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem; height: 1.75rem;
+  border-radius: var(--radius);
+  color: var(--ink-3);
+  transition: color .12s ease, background-color .12s ease;
+}
+.codeblock__copy:hover { color: var(--ink); background: var(--surface); }
+.codeblock__copy svg { width: .95rem; height: .95rem; }
+.codeblock__copy .icon-check { display: none; }
+.codeblock__copy.is-done .icon-check { display: block; color: var(--syn-string); }
+.codeblock__copy.is-done .icon-copy { display: none; }
+
+.codeblock .highlight { margin: 0; }
+.codeblock pre {
+  margin: 0;
+  padding: .95rem 1.1rem;
+  overflow-x: auto;
+  line-height: 1.62;
+  tab-size: 2;
+  background: transparent;
+  color: var(--ink);
+}
+.codeblock pre code { display: block; min-width: max-content; }
+
+/* code with line numbers (lineNumbersInTable) */
+.codeblock .chroma .lntable {
+  display: block;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  font-size: inherit;
+  overflow-x: auto;
+}
+.codeblock .chroma .lntable tbody,
+.codeblock .chroma .lntable tr { display: flex; width: 100%; }
+.codeblock .chroma .lntd { border: 0; padding: 0; vertical-align: top; }
+.codeblock .chroma .lntd:first-child { flex: 0 0 auto; }
+.codeblock .chroma .lntd:last-child { flex: 1 1 auto; min-width: 0; }
+/* The line-number gutter must not scroll: it inherits overflow-x:auto from
+   .codeblock pre above while flex squeezes its width, which produced a stray
+   scrollbar right under the numbers. Back to overflow visible so the cell
+   sizes to its content. The gap to the code column comes from the <pre>'s own
+   padding rather than from .lnt: trailing padding on an inline box is not
+   counted in intrinsic width, so putting it on .lnt always left the column
+   narrower than what it actually holds. */
+.codeblock .chroma .lntd:first-child pre {
+  padding-inline: 1.1rem .95rem;
+  overflow: visible;
+}
+.codeblock .chroma .lnt { padding-inline-end: 0; }
+.chroma .lnt, .chroma .ln {
+  color: var(--ink-3);
+  opacity: .65;
+  user-select: none;
+  -webkit-user-select: none;
+  padding-inline-end: 1.1em;
+  font-variant-numeric: tabular-nums;
+}
+.chroma .hl {
+  display: block;
+  background: var(--syn-hl-bg);
+  margin-inline: -1.1rem;
+  padding-inline: 1.1rem;
+}
+
+/* ── Chroma palette ─────────────────────────────────────────────────── */
+.chroma { background: transparent; color: var(--ink); }
+
+.chroma .err { color: var(--syn-error); }
+
+.chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs {
+  color: var(--syn-comment); font-style: italic;
+}
+.chroma .cp, .chroma .cpf { color: var(--syn-comment); }
+
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr {
+  color: var(--syn-keyword);
+}
+.chroma .kt { color: var(--syn-type); }
+
+.chroma .o, .chroma .ow { color: var(--syn-punct); }
+.chroma .p { color: var(--syn-punct); }
+
+.chroma .l, .chroma .ld { color: var(--syn-string); }
+.chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .dl,
+.chroma .s1, .chroma .s2, .chroma .sd, .chroma .sh, .chroma .sx,
+.chroma .ss, .chroma .sr { color: var(--syn-string); }
+.chroma .se, .chroma .si { color: var(--syn-number); }
+
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi,
+.chroma .il, .chroma .mo { color: var(--syn-number); }
+
+.chroma .n, .chroma .nx, .chroma .py, .chroma .nl { color: inherit; }
+.chroma .na { color: var(--syn-attr); }
+.chroma .nb, .chroma .bp { color: var(--syn-builtin); }
+.chroma .nc, .chroma .nn { color: var(--syn-type); }
+.chroma .no { color: var(--syn-number); }
+.chroma .nd { color: var(--syn-attr); font-style: italic; }
+.chroma .ni { color: var(--syn-builtin); }
+.chroma .ne { color: var(--syn-error); }
+.chroma .nf, .chroma .fm { color: var(--syn-func); }
+.chroma .nt { color: var(--syn-tag); }
+.chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: var(--syn-attr); }
+
+.chroma .gd { color: var(--syn-error); background: var(--syn-del-bg); display: inline-block; width: 100%; }
+.chroma .gi { color: var(--syn-string); background: var(--syn-ins-bg); display: inline-block; width: 100%; }
+.chroma .ge { font-style: italic; }
+.chroma .gs { font-weight: 700; }
+.chroma .gh, .chroma .gu { color: var(--syn-func); font-weight: 600; }
+.chroma .gp { color: var(--syn-comment); }
+.chroma .gr, .chroma .gt { color: var(--syn-error); }
+.chroma .go { color: var(--ink-2); }

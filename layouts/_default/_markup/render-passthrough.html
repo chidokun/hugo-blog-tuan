@@ -1,0 +1,12 @@
+{{- /* LaTeX -> HTML+MathML through KaTeX, at build time. The browser only has
+       to fetch KaTeX's stylesheet (see the assets-foot.html partial). */ -}}
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") -}}
+{{- with try (transform.ToMath .Inner $opts) -}}
+  {{- with .Err -}}
+    {{- warnf "blog@tuan: could not render the expression %q in %s: %s" $.Inner $.Page.File.Path . -}}
+    <code class="math-error">{{ $.Inner }}</code>
+  {{- else -}}
+    {{- $.Page.Store.Set "hasMath" true -}}
+    {{- .Value -}}
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,14 @@
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <p>
+      {{ with site.Copyright }}{{ . | markdownify }}{{ else }}©&nbsp;{{ now.Format "2006" }} {{ site.Title }}{{ end }}
+    </p>
+    <p>
+      {{- with site.Home.OutputFormats.Get "rss" }}<a href="{{ .Permalink }}">RSS</a> · {{ end -}}
+      <a href="https://gohugo.io/" rel="noopener">Hugo</a> ·
+      {{- /* Theme credit: this is the theme's name, not the site's. The site
+             name comes from `title` in the configuration. */ -}}
+      <a href="https://github.com/nguyentuan/blog-tuan" rel="noopener">blog@tuan</a>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,11 @@
+{{- /* Furigana. Usage: {{< ruby "漢字" "かんじ" >}}
+       <rp> is the fallback for browsers that cannot render ruby: the reading
+       then shows in parentheses instead of above the base text. */ -}}
+{{- $base := or (.Get 0) (.Get "base") -}}
+{{- $rt := or (.Get 1) (.Get "rt") -}}
+{{- if or (not $base) (not $rt) -}}
+  {{- errorf "the ruby shortcode needs two arguments: {{< ruby \"漢字\" \"かんじ\" >}} — %s" .Position -}}
+{{- end -}}
+<ruby>{{ $base }}<rp>（</rp><rt>{{ $rt }}</rt><rp>）</rp></ruby>
+{{- /* Leave no trailing newline: it would become a stray space right after
+       the ruby when the shortcode is spliced into a Japanese sentence. */ -}}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{{- $t := site.Params.blog | default dict -}}
+{{- $cursor := or (index $t "cursorBlink") "none" -}}
+<html lang="{{ site.Language.Lang }}"
+  {{- with index $t "dir" }} dir="{{ . }}"{{ end }}
+  {{- if ne $cursor "none" }} data-cursor="{{ $cursor }}"{{ end }}>
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body{{ if .IsHome }} class="home"{{ end }}>
+  <a class="skip-link" href="#main">{{ i18n "skipToContent" }}</a>
+
+  {{ partial "header.html" . }}
+
+  <main id="main" class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  {{ partial "assets-foot.html" . }}
+</body>
+</html>

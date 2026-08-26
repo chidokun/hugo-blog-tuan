@@ -1,0 +1,13 @@
+<div class="post-header__meta">
+  {{- partial "date.html" . }}
+  {{- if .ReadingTime }}
+  <span class="sep" aria-hidden="true">/</span>
+  <span class="t-label">{{ i18n "readingTime" (dict "count" .ReadingTime) }}</span>
+  {{- end }}
+  {{- with .GetTerms "categories" }}
+  <span class="sep" aria-hidden="true">/</span>
+  <span class="t-label">
+    {{- range $i, $t := . }}{{ if $i }}, {{ end }}<a href="{{ $t.RelPermalink }}">{{ $t.LinkTitle }}</a>{{ end -}}
+  </span>
+  {{- end }}
+</div>

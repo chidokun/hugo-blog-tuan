@@ -1,0 +1,29 @@
+{{- /* Wrap tables in a horizontal scroller at build time. This used to be done
+       in JavaScript, which meant a wide table overflowed the page without JS. */ -}}
+<div class="table-wrap">
+  <table
+    {{- range $k, $v := .Attributes }}{{ with $v }} {{ $k }}="{{ $v }}"{{ end }}{{ end }}>
+    {{- with .THead }}
+    <thead>
+      {{- range . }}
+      <tr>
+        {{- range . }}
+        <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    {{- end }}
+    {{- with .TBody }}
+    <tbody>
+      {{- range . }}
+      <tr>
+        {{- range . }}
+        <td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+    {{- end }}
+  </table>
+</div>

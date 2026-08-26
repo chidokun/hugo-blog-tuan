@@ -1,0 +1,8 @@
+{{- /* Body text uses the reader's system fonts, so nothing is downloaded for
+       it; only Space Mono for code comes from Google Fonts. */ -}}
+{{- $t := site.Params.blog | default dict -}}
+{{- if ne (index $t "googleFonts") false -}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+{{- end -}}

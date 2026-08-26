@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="page-head">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-head__note">{{ . | markdownify }}</p>{{ end }}
+  </div>
+
+  {{- with .Content }}<div class="prose" style="margin-block-end:2.5rem">{{ . }}</div>{{ end }}
+
+  {{- $paged := .Paginate .RegularPages }}
+
+  {{- if $paged.Pages }}
+  <div class="post-list">
+    {{- range $paged.Pages }}
+      {{ partial "post-item.html" . }}
+    {{- end }}
+  </div>
+  {{ partial "pager.html" $paged }}
+  {{- else }}
+  <p class="dim">{{ i18n "noPosts" }}</p>
+  {{- end }}
+</div>
+{{ end }}

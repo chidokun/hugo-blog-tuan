@@ -1,0 +1,41 @@
+/* ── reset ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Reserve the scrollbar's width even on pages short enough not to need one.
+     Without this, moving from a long page to a short one widens the viewport by
+     the scrollbar and every centred thing on the page jumps sideways. */
+  scrollbar-gutter: stable;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+body { min-height: 100vh; }
+
+img, picture, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+
+:where(a) { color: inherit; }
+
+::selection {
+  background: var(--sel-bg);
+  color: var(--sel-fg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}

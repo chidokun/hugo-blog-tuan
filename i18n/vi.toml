@@ -1,0 +1,54 @@
+[skipToContent]
+other = "Tới nội dung chính"
+[mainNav]
+other = "Điều hướng chính"
+[toDark]
+other = "Chuyển sang giao diện tối"
+[toLight]
+other = "Chuyển sang giao diện sáng"
+[readingTime]
+other = "{{ .count }} phút đọc"
+[allPosts]
+other = "Xem tất cả {{ .count }} bài"
+[noPosts]
+other = "Chưa có bài viết nào."
+[noTerms]
+other = "Chưa có mục nào."
+[pagination]
+other = "Phân trang"
+[newer]
+other = "Mới hơn"
+[older]
+other = "Cũ hơn"
+[toc]
+other = "Mục lục"
+[updatedOn]
+other = "Cập nhật"
+[postNav]
+other = "Bài trước và bài sau"
+[prevPost]
+other = "Bài trước"
+[nextPost]
+other = "Bài sau"
+[termNote]
+other = "{{ .count }} bài trong {{ .taxonomy }} này"
+[allTerms]
+other = "Tất cả chuyên mục"
+[archiveNote]
+other = "{{ .count }} bài, xếp theo thời gian"
+[notFound]
+other = "Không tìm thấy trang bạn cần."
+[backHome]
+other = "Về trang chủ"
+[copyCode]
+other = "Sao chép đoạn mã"
+[anchorTo]
+other = "Liên kết tới"
+[taxo_category]
+other = "chuyên mục"
+[taxo_tag]
+other = "thẻ"
+[postCount]
+other = "{{ .count }} bài"
+[githubLink]
+other = "Xem mã nguồn trên GitHub"

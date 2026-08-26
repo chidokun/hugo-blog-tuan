@@ -1,0 +1,30 @@
+/* ── full-bleed blocks ─────────────────────────────────────────────────
+   Everything sits inside the text column by default. Only when the author
+   asks for it — {wide=true} on a code or mermaid fence, {.wide} on a figure —
+   does a block reclaim .wrap's padding and reach the edge of the page frame.
+   On narrow screens the formula resolves to 0 and everything shares one margin.
+
+   Not 100vw: that unit counts the vertical scrollbar, so at tablet widths with
+   a classic scrollbar the block came out exactly one scrollbar too wide. 100cqw
+   measures .site-main, which always matches the real width. The 100vw block
+   above stays as the fallback for browsers without container queries.
+   ------------------------------------------------------------------- */
+.codeblock--wide,
+pre.mermaid.is-wide,
+.prose figure.wide,
+.prose .wide {
+  width: min(var(--w-page), calc(100vw - 2 * var(--gutter)));
+  margin-inline: calc(50% - min(var(--w-page), calc(100vw - 2 * var(--gutter))) / 2);
+}
+
+@supports (width: 1cqw) {
+  .site-main { container-type: inline-size; }
+
+  .codeblock--wide,
+  pre.mermaid.is-wide,
+  .prose figure.wide,
+  .prose .wide {
+    width: min(var(--w-page), calc(100cqw - 2 * var(--gutter)));
+    margin-inline: calc(50% - min(var(--w-page), calc(100cqw - 2 * var(--gutter))) / 2);
+  }
+}

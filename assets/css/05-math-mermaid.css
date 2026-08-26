@@ -1,0 +1,77 @@
+/* ── mathematics (KaTeX, already rendered at build time) ────────────── */
+.katex { font-size: 1.045em; }
+.katex-display {
+  margin-block: 1.6em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: .35em;
+}
+.katex-display > .katex { text-align: center; }
+/* KaTeX already hides its duplicate MathML from screen readers; all that is
+   left here is matching the colours to the theme */
+.katex, .katex * { color: inherit; }
+mjx-container, math { color: inherit; }
+
+/* ── Mermaid diagrams ───────────────────────────────────────────────── */
+pre.mermaid {
+  margin-block: 2em;
+  padding: 1.25rem;
+  background: var(--canvas-alt);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  text-align: center;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+/* once rendered, drop the "code block" look */
+pre.mermaid[data-processed="true"] {
+  font-family: var(--font-body);
+  color: var(--ink);
+  white-space: normal;
+}
+pre.mermaid svg { max-width: 100%; height: auto; margin-inline: auto; }
+/* Mermaid uses very generic class names (.label, .node, .cluster…). Fence them
+   off so the theme's own CSS cannot leak into a diagram. */
+pre.mermaid :where(.label, .nodeLabel, .edgeLabel, .titleText) {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ── shortcode callout ──────────────────────────────────────────────── */
+.callout {
+  margin-block: 1.9em;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--rule);
+  border-inline-start: 2px solid var(--callout-color, var(--rule-strong));
+  border-radius: var(--radius);
+  background: var(--canvas-alt);
+  font-size: calc(var(--step-0) * .96);
+}
+.callout__title {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--callout-color, var(--ink-2));
+  margin-block-end: .45em;
+}
+.callout > :last-child { margin-block-end: 0; }
+.callout p + p { margin-block-start: .8em; }
+.callout--note    { --callout-color: var(--syn-func); }
+.callout--tip     { --callout-color: var(--syn-string); }
+.callout--warning { --callout-color: var(--syn-number); }
+.callout--danger  { --callout-color: var(--syn-error); }
+
+/* ── utilities ──────────────────────────────────────────────────────── */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

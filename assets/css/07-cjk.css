@@ -1,0 +1,62 @@
+/* ── Japanese ──────────────────────────────────────────────────────────
+   Switched on by lang="ja" on the article (front matter: lang: ja). Only a
+   few things change: looser leading, no Latin-style tracking on headings,
+   and kinsoku line breaking.
+   ------------------------------------------------------------------- */
+:lang(ja) {
+  line-break: strict;        /* keep punctuation off the start of a line */
+  font-kerning: none;
+}
+
+.prose:lang(ja) { line-height: 1.9; }   /* dense kanji need more air than Latin */
+
+.prose:lang(ja) h1, .prose:lang(ja) h2, .prose:lang(ja) h3,
+.prose:lang(ja) h4, .prose:lang(ja) h5, .prose:lang(ja) h6,
+:lang(ja) .post-header h1 {
+  letter-spacing: 0;         /* Latin-style tracking jams kanji together */
+  line-height: 1.45;
+}
+
+.prose:lang(ja) li + li { margin-block-start: .5em; }
+
+/* Mincho ships no italic face, so the browser fakes an oblique — exactly what
+   breaks the shape of kana. Drop italics wherever the theme is the one asking
+   for them. <em> is left alone: typing *…* is the author's own choice. */
+:lang(ja) .post-header__desc,
+:lang(ja) .page-head__note,
+:lang(ja) .masthead p,
+.prose:lang(ja) blockquote { font-style: normal; }
+
+/* ── ふりがな (ruby) ─────────────────────────────────────────────────── */
+ruby {
+  ruby-position: over;
+  ruby-align: center;
+}
+ruby > rt {
+  font-size: .5em;
+  line-height: 1.1;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--ink-3);
+  text-transform: none;
+}
+/* <rp> only shows in browsers that cannot render ruby — leave it to the user
+   agent, forcing display:none would throw the fallback away. */
+
+/* A line carrying ruby needs headroom, or the furigana touches the line above.
+   :has() takes care of that without any hand-applied class. */
+.prose p:has(ruby),
+.prose li:has(ruby),
+.prose td:has(ruby),
+.prose h2:has(ruby),
+.prose h3:has(ruby) { line-height: 2.2; }
+
+/* ── 圏点 (kenten): emphasis dots set above the characters ──────────── */
+.kenten {
+  -webkit-text-emphasis: filled dot;
+  text-emphasis: filled dot;
+  -webkit-text-emphasis-position: over right;
+  text-emphasis-position: over right;
+}
+.prose p:has(.kenten),
+.prose li:has(.kenten) { line-height: 2.15; }

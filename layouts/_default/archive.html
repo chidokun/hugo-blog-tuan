@@ -1,0 +1,24 @@
+{{ define "main" }}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- $posts := where site.RegularPages "Section" "in" $sections -}}
+
+<div class="wrap">
+  <div class="page-head">
+    <h1>{{ .Title }}</h1>
+    <p class="page-head__note">
+      {{- with .Description }}{{ . | markdownify }}{{ else }}{{ i18n "archiveNote" (dict "count" (len $posts)) }}{{ end -}}
+    </p>
+  </div>
+
+  {{- with .Content }}<div class="prose" style="margin-block-end:2.5rem">{{ . }}</div>{{ end }}
+
+  {{- range $posts.GroupByDate "2006" }}
+  <section class="archive-group">
+    <h2>{{ .Key }}</h2>
+    {{ partial "archive-rows.html" (dict "pages" .Pages "showCat" true) }}
+  </section>
+  {{- else }}
+  <p class="dim">{{ i18n "noPosts" }}</p>
+  {{- end }}
+</div>
+{{ end }}

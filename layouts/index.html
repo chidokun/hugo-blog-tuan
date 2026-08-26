@@ -1,0 +1,39 @@
+{{ define "main" }}
+{{- $q := site.Params.blog | default dict -}}
+{{- $limit := int (or (index $q "homeCount") 10) -}}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- $posts := where site.RegularPages "Section" "in" $sections -}}
+
+<div class="wrap">
+  <div class="masthead">
+    <h1>{{ site.Title }}</h1>
+    {{- with (or site.Params.tagline site.Params.description) }}
+    <p>{{ . | markdownify }}</p>
+    {{- end }}
+  </div>
+
+  {{- with .Content }}
+  <div class="prose" style="margin-block-end:2.75rem">{{ . }}</div>
+  {{- end }}
+
+  {{- if $posts }}
+  <div class="post-list">
+    {{- range first $limit $posts }}
+      {{ partial "post-item.html" . }}
+    {{- end }}
+  </div>
+
+  {{- if gt (len $posts) $limit }}
+  <p class="list-more">
+    {{- with site.GetPage "/archive" -}}
+      <a href="{{ .RelPermalink }}">{{ i18n "allPosts" (dict "count" (len $posts)) }}</a>
+    {{- else -}}
+      <a href="{{ (index $sections 0) | relURL }}">{{ i18n "allPosts" (dict "count" (len $posts)) }}</a>
+    {{- end -}}
+  </p>
+  {{- end }}
+  {{- else }}
+  <p class="dim">{{ i18n "noPosts" }}</p>
+  {{- end }}
+</div>
+{{ end }}
